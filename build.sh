@@ -1,24 +1,24 @@
 #!/usr/bin/env bash
 
-SOURCE="/tmp/ffmpeg/sw"
+RAMDISK=$(diskutil list | awk '/tmp-ffmpeg/ {print $5}')
 
-COMPILED="/tmp/ffmpeg/compile"
-
-if [ -d "/tmp/ffmpeg" ]; then
-  rm -rf "/tmp/ffmpeg"
+if [ -z "${RAMDISK}" ]; then
+  diskutil erasevolume HFS+ 'tmp-ffmpeg' $(hdiutil attach -nobrowse -nomount ram://8388608)
+else
+  hdiutil detach ${RAMDISK}
+  diskutil erasevolume HFS+ 'tmp-ffmpeg' $(hdiutil attach -nobrowse -nomount ram://8388608)
 fi
 
+export SOURCE="/Volumes/tmp-ffmpeg/sw"
+export COMPILED="/Volumes/tmp-ffmpeg/compile"
 
 mkdir -p ${SOURCE}
-
 mkdir -p ${COMPILED}
 
-cp multilib.patch ${COMPILED}/
+cp -r patches ${COMPILED}/
 
 export PATH=${SOURCE}/bin:$PATH
-
 export CC=clang
-
 export PKG_CONFIG_PATH="${SOURCE}/lib/pkgconfig"
 
 #
@@ -185,10 +185,14 @@ echo '♻️ ' Start compiling CMAKE
 
 cd ${COMPILED}
 wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}.tar.gz
+
 tar xf cmake-${CMAKE_VERSION}.tar.gz
+
 cd cmake-${CMAKE_VERSION}
 
+
 ./configure --prefix=${SOURCE}
+
 
 make -j
 
@@ -309,8 +313,9 @@ rm -f ${SOURCE}/lib/libx265.a 2>/dev/null
 cd ${COMPILED}
 git clone https://bitbucket.org/multicoreware/x265_git
 cd x265_git/build/linux
-git checkout Release_${X265_VERSION}
-patch -p1 multilib.sh < ${COMPILED}/multilib.patch
+
+patch -p1 multilib.sh < ../../../patches/multilib.patch
+
 ./multilib.sh
 
 if [ $? -ne 0 ]; then
