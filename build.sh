@@ -49,7 +49,7 @@ SNAPPY_VERSION=1.1.9
 OPENJPEG_VERSION=2.5.0
 LIBWEBP_VERSION=1.2.2
 FFMPEG_VERSION=5.0.1
-X265_VERSION=3.5
+SDL_VERSION=2.0.22
 
 
 echo '♻️ ' Start compiling YASM
@@ -833,6 +833,31 @@ fi
 
 sleep 1
 
+#
+# SDL
+#
+
+cd ${COMPILED}
+wget https://libsdl.org/release/SDL2-${SDL_VERSION}.tar.gz
+tar xf SDL2-${SDL_VERSION}.tar.gz
+cd SDL2-${SDL_VERSION}
+
+./configure --prefix=${SOURCE} --enable-shared=no --enable-static=yes
+
+make -j
+
+if [ $? -ne 0 ]; then
+  echo "SDL2 compile failed"
+  exit 1
+fi
+
+make install
+
+if [ $? -ne 0 ]; then
+  echo "SDL2 compile failed"
+  exit 1
+fi
+
 echo '♻️ ' Start compiling FFMPEG
 
 cd ${COMPILED}
@@ -876,4 +901,23 @@ export LDFLAGS="$LDFLAGS -framework VideoToolbox"
 
 make -j
 
+if [ $? -ne 0 ]; then
+  echo "FFMPEG compile failed"
+  exit 1
+fi
+
 make install
+
+if [ $? -ne 0 ]; then
+  echo "FFMPEG compile failed"
+  exit 1
+fi
+
+#
+# Create Package
+#
+
+cd ${SOURCE}/bin
+zip ffmpeg_bin.zip ffmpeg ffprobe
+cp ffmpeg_bin.zip "${HOME}/"
+
