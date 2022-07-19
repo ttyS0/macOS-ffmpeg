@@ -39,7 +39,7 @@ ENCA_VERSION=1.19
 FREETYPE_VERSION=2.12.1
 FRIBIDI_VERSION=1.0.12
 FONTCONFIG_VERSION=2.14.0
-HARFBUZZ_VERSION=4.3.0
+HARFBUZZ_VERSION=4.4.1
 LIBASS_VERSION=0.16.0
 OPUS_VERSION=1.3.1
 LIBOGG_VERSION=1.3.5
@@ -47,7 +47,7 @@ LIBVORBIS_VERSION=1.3.7
 LIBTHEORA_VERSION=1.1.1
 SNAPPY_VERSION=1.1.9
 OPENJPEG_VERSION=2.5.0
-LIBWEBP_VERSION=1.2.2
+LIBWEBP_VERSION=1.2.3
 FFMPEG_VERSION=5.0.1
 SDL_VERSION=2.0.22
 
@@ -217,7 +217,7 @@ echo '♻️ ' Start compiling Lame
 #
 
 cd ${COMPILED}
-git clone https://git.skj.dev/sean/lame
+git clone --depth=1 https://git.skj.dev/sean/lame
 cd lame
 
 ./configure --prefix=${SOURCE} --disable-shared --enable-static --disable-frontend --disable-debug --disable-dependency-tracking --disable-decoder
@@ -269,7 +269,7 @@ fi
 #
 
 cd ${COMPILED}
-git clone https://code.videolan.org/videolan/x264.git
+git clone --depth=1 https://code.videolan.org/videolan/x264.git
 cd x264
 
 ./configure --prefix=${SOURCE} --disable-shared --enable-static --enable-pic --disable-cli
@@ -311,7 +311,7 @@ rm -f ${SOURCE}/include/x265*.h 2>/dev/null
 rm -f ${SOURCE}/lib/libx265.a 2>/dev/null
 
 cd ${COMPILED}
-git clone https://bitbucket.org/multicoreware/x265_git
+git clone --depth=1  https://bitbucket.org/multicoreware/x265_git
 cd x265_git/build/linux
 
 patch -p1 multilib.sh < ../../../patches/multilib.patch
@@ -443,7 +443,7 @@ echo '♻️ ' Start compiling LIBPNG
 #
 
 cd ${COMPILED}
-git clone https://git.code.sf.net/p/libpng/code libpng
+git clone --depth=1 https://git.code.sf.net/p/libpng/code libpng
 cd libpng
 
 ./configure --prefix=${SOURCE} --disable-dependency-tracking --disable-silent-rules --enable-static --disable-shared
@@ -752,7 +752,7 @@ echo '♻️ ' Start compiling Vid-stab
 #
 
 cd ${COMPILED}
-git clone https://github.com/georgmartius/vid.stab.git
+git clone --depth=1 https://github.com/georgmartius/vid.stab.git
 cd vid.stab
 
 cmake -DCMAKE_INSTALL_PREFIX:PATH=${SOURCE} -DLIBTYPE=STATIC -DBUILD_SHARED_LIBS=OFF -DUSE_OMP=OFF -DENABLE_SHARED=off .
