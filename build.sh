@@ -858,6 +858,23 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+#
+# SVT-AV1
+#
+
+cd ${COMPILED}
+git clone --depth=1 https://gitlab.com/AOMediaCodec/SVT-AV1.git
+cd SVT-AV1
+cd Build
+cmake .. -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=${SOURCE} -DBUILD_SHARED_LIBS=off
+
+make -j
+make install
+
+#
+# ffmpeg
+#
+
 echo '♻️ ' Start compiling FFMPEG
 
 cd ${COMPILED}
@@ -897,7 +914,8 @@ export LDFLAGS="$LDFLAGS -framework VideoToolbox"
   --enable-postproc \
   --enable-nonfree \
   --enable-neon \
-  --enable-runtime-cpudetect
+  --enable-runtime-cpudetect \
+  --enable-libsvtav1
 
 make -j
 
