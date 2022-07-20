@@ -51,12 +51,13 @@ LIBWEBP_VERSION=1.2.3
 FFMPEG_VERSION=5.0.1
 SDL_VERSION=2.0.22
 
-
-echo '♻️ ' Start compiling YASM
-
 #
 # compile YASM
 #
+
+echo "####################"
+echo '♻️ ' Start compiling YASM
+echo "####################"
 
 cd ${COMPILED}
 
@@ -80,13 +81,14 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-sleep 1
-
-echo '♻️ ' Start compiling NASM
 
 #
 # compile NASM
 #
+
+echo "####################"
+echo '♻️ ' Start compiling NASM
+echo "####################"
 
 cd ${COMPILED}
 wget https://www.nasm.us/pub/nasm/releasebuilds/${NASM_VERSION}/nasm-${NASM_VERSION}.tar.gz
@@ -109,14 +111,14 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-sleep 1
-
-echo '♻️ ' Start compiling PKG
 
 #
-# compile PKG
+# compile PKG-CONFIG
 #
 
+echo "####################"
+echo '♻️ ' Start compiling PKG-CONFIG
+echo "####################"
 
 cd ${COMPILED}
 wget https://pkg-config.freedesktop.org/releases/pkg-config-${PKG_CONFIG_VERSION}.tar.gz
@@ -144,13 +146,14 @@ fi
 
 unset LDFLAGS
 
-sleep 1
-
-echo '♻️ ' Start compiling ZLIB
 
 #
 # ZLIB
 #
+
+echo "####################"
+echo '♻️ ' Start compiling ZLIB
+echo "####################"
 
 cd ${COMPILED}
 wget https://zlib.net/zlib-${ZLIB_VERSION}.tar.gz
@@ -177,11 +180,14 @@ rm ${SOURCE}/lib/libz.so*
 
 rm ${SOURCE}/lib/libz.*
 
-echo '♻️ ' Start compiling CMAKE
 
 #
 # compile CMAKE
 #
+
+echo "####################"
+echo '♻️ ' Start compiling CMAKE
+echo "####################"
 
 cd ${COMPILED}
 wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}.tar.gz
@@ -208,13 +214,13 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-sleep 1
-
-echo '♻️ ' Start compiling Lame
-
 #
 # compile LAME
 #
+
+echo "####################"
+echo '♻️ ' Start compiling LAME
+echo "####################"
 
 cd ${COMPILED}
 git clone --depth=1 https://git.skj.dev/sean/lame
@@ -236,11 +242,13 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo '♻️ ' Start compiling X264
-
 #
 # compile FDK-AAC
 #
+
+echo "####################"
+echo '♻️ ' Start compiling FDK-AAC
+echo "####################"
 
 cd ${COMPILED}
 wget https://github.com/mstorsjo/fdk-aac/archive/refs/tags/v${FDK_AAC_VERSION}.tar.gz
@@ -267,6 +275,10 @@ fi
 #
 # x264
 #
+
+echo "####################"
+echo '♻️ ' Start compiling x264
+echo "####################"
 
 cd ${COMPILED}
 git clone --depth=1 https://code.videolan.org/videolan/x264.git
@@ -295,23 +307,20 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# echo
-# echo continue
-# read -s
-
-sleep 1
-
-echo '♻️ ' Start compiling X265
 
 #
 # x265
 #
 
+echo "####################"
+echo '♻️ ' Start compiling x265
+echo "####################"
+
 rm -f ${SOURCE}/include/x265*.h 2>/dev/null
 rm -f ${SOURCE}/lib/libx265.a 2>/dev/null
 
 cd ${COMPILED}
-git clone --depth=1  https://bitbucket.org/multicoreware/x265_git
+git clone https://bitbucket.org/multicoreware/x265_git
 cd x265_git/build/linux
 
 patch -p1 multilib.sh < ../../../patches/multilib.patch
@@ -323,13 +332,14 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-sleep 1
-
-echo '♻️ ' Start compiling VPX
 
 #
 # VPX
 #
+
+echo "####################"
+echo '♻️ ' Start compiling VPX
+echo "####################"
 
 cd ${COMPILED}
 wget https://github.com/webmproject/libvpx/archive/refs/tags/v${VPX_VERSION}.tar.gz
@@ -352,11 +362,13 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo '♻️ ' Start compiling EXPAT
-
 #
 # EXPAT
 #
+
+echo "####################"
+echo '♻️ ' Start compiling EXPAT
+echo "####################"
 
 cd ${COMPILED}
 wget https://github.com/libexpat/libexpat/archive/refs/tags/R_${EXPAT_VERSION//./_}.tar.gz
@@ -380,11 +392,13 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo '♻️ ' Start compiling LIBICONV
-
 #
 # LIBICONV
 #
+
+echo "####################"
+echo '♻️ ' Start compiling LIBICONV
+echo "####################"
 
 cd ${COMPILED}
 wget https://ftp.gnu.org/pub/gnu/libiconv/libiconv-${ICONV_VERSION}.tar.gz
@@ -407,11 +421,13 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo '♻️ ' Start compiling Gettext
-
 #
 # GETTEXT
 #
+
+echo "####################"
+echo '♻️ ' Start compiling GETTEXT
+echo "####################"
 
 cd ${COMPILED}
 wget https://ftp.gnu.org/pub/gnu/gettext/gettext-${GETTEXT_VERSION}.tar.gz
@@ -436,11 +452,13 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo '♻️ ' Start compiling LIBPNG
-
 #
 # LIBPNG
 #
+
+echo "####################"
+echo '♻️ ' Start compiling LIBPNG
+echo "####################"
 
 cd ${COMPILED}
 git clone --depth=1 https://git.code.sf.net/p/libpng/code libpng
@@ -462,12 +480,14 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo '♻️ ' Start compiling ENCA
-
 
 #
 # ENCA
 #
+
+echo "####################"
+echo '♻️ ' Start compiling ENCA
+echo "####################"
 
 cd ${COMPILED}
 wget https://dl.cihar.com/enca/enca-${ENCA_VERSION}.tar.xz
@@ -490,11 +510,14 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo '♻️ ' Start compiling FREETYPE
 
 #
 # FREETYPE
 #
+
+echo "####################"
+echo '♻️ ' Start compiling FREETYPE
+echo "####################"
 
 cd ${COMPILED}
 wget https://download.savannah.gnu.org/releases/freetype/freetype-${FREETYPE_VERSION}.tar.gz
@@ -517,11 +540,13 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo '♻️ ' Start compiling FRIBIDI
-
 #
 # FRIBIDI
 #
+
+echo "####################"
+echo '♻️ ' Start compiling FRIBIDI
+echo "####################"
 
 cd ${COMPILED}
 wget https://github.com/fribidi/fribidi/releases/download/v${FRIBIDI_VERSION}/fribidi-${FRIBIDI_VERSION}.tar.xz
@@ -544,12 +569,13 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-
-echo '♻️ ' Start compiling FONTCONFIG
-
 #
 # FONTCONFIG
 #
+
+echo "####################"
+echo '♻️ ' Start compiling FONTCONFIG
+echo "####################"
 
 cd ${COMPILED}
 wget https://www.freedesktop.org/software/fontconfig/release/fontconfig-${FONTCONFIG_VERSION}.tar.gz
@@ -572,13 +598,13 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-sleep 1
-
-echo '♻️ ' Start compiling harfbuzz
-
 #
 # HARFBUZZ
 #
+
+echo "####################"
+echo '♻️ ' Start compiling HARFBUZZ
+echo "####################"
 
 cd ${COMPILED}
 wget https://github.com/harfbuzz/harfbuzz/releases/download/${HARFBUZZ_VERSION}/harfbuzz-${HARFBUZZ_VERSION}.tar.xz
@@ -602,13 +628,13 @@ if [ $? -ne 0 ]; then
 fi
 
 
-echo '♻️ ' Start compiling LIBASS
-
-sleep 1
-
 #
 # LIBASS
 #
+
+echo "####################"
+echo '♻️ ' Start compiling LIBASS
+echo "####################"
 
 cd ${COMPILED}
 wget https://github.com/libass/libass/releases/download/${LIBASS_VERSION}/libass-${LIBASS_VERSION}.tar.gz
@@ -631,13 +657,13 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-sleep 1
-
-echo '♻️ ' Start compiling OPUS
-
 #
 # OPUS
 #
+
+echo "####################"
+echo '♻️ ' Start compiling OPUS
+echo "####################"
 
 cd ${COMPILED}
 wget https://archive.mozilla.org/pub/opus/opus-${OPUS_VERSION}.tar.gz
@@ -660,13 +686,15 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-sleep 1
-
 
 
 #
 # LIBOGG
 #
+
+echo "####################"
+echo '♻️ ' Start compiling LIBOGG
+echo "####################"
 
 cd ${COMPILED}
 wget https://downloads.xiph.org/releases/ogg/libogg-${LIBOGG_VERSION}.tar.gz
@@ -689,11 +717,13 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-sleep 1
-
 #
 # LIBVORBIS
 #
+
+echo "####################"
+echo '♻️ ' Start compiling LIBVORBIS
+echo "####################"
 
 cd ${COMPILED}
 wget https://downloads.xiph.org/releases/vorbis/libvorbis-${LIBVORBIS_VERSION}.tar.gz
@@ -716,11 +746,12 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-sleep 1
-
 #
 # THEORA
 #
+echo "####################"
+echo '♻️ ' Start compiling THEORA
+echo "####################"
 
 cd ${COMPILED}
 wget https://downloads.xiph.org/releases/theora/libtheora-${LIBTHEORA_VERSION}.tar.bz2
@@ -743,19 +774,19 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-sleep 1
-
-echo '♻️ ' Start compiling Vid-stab
 
 #
 # Vidstab
 #
+echo "####################"
+echo '♻️ ' Start compiling Vidstab
+echo "####################"
 
 cd ${COMPILED}
 git clone --depth=1 https://github.com/georgmartius/vid.stab.git
 cd vid.stab
 
-cmake -DCMAKE_INSTALL_PREFIX:PATH=${SOURCE} -DLIBTYPE=STATIC -DBUILD_SHARED_LIBS=OFF -DUSE_OMP=OFF -DENABLE_SHARED=off .
+cmake -DCMAKE_INSTALL_PREFIX:PATH=${SOURCE} -DBUILD_SHARED_LIBS=OFF -DUSE_OMP=OFF  .
 
 make -j
 
@@ -771,11 +802,13 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-sleep 1
 
 #
 # OpenJPEG
 #
+echo "####################"
+echo '♻️ ' Start compiling OpenJPEG
+echo "####################"
 
 cd ${COMPILED}
 wget https://github.com/uclouvain/openjpeg/archive/refs/tags/v${OPENJPEG_VERSION}.tar.gz
@@ -802,40 +835,14 @@ rm ${SOURCE}/lib/libopenjp2.2.4.0.dy*
 rm ${SOURCE}/lib/libopenjp2.dy*
 rm ${SOURCE}/lib/libopenjp2.7.dy*
 
-sleep 1
-
-echo '♻️ ' Start compiling WEBP
-
-#
-# WEBP
-#
-
-cd ${COMPILED}
-wget https://github.com/webmproject/libwebp/archive/refs/tags/v${LIBWEBP_VERSION}.tar.gz
-tar xf v${LIBWEBP_VERSION}.tar.gz
-cd libwebp-${LIBWEBP_VERSION}
-
-cmake -DCMAKE_INSTALL_PREFIX:PATH=${SOURCE} -DENABLE_C_DEPS=ON -DLIBTYPE=STATIC -DENABLE_SHARED=OFF -DENABLE_STATIC=ON .
-
-make -j
-
-if [ $? -ne 0 ]; then
-  echo "LIBPNG compile failed"
-  exit 1
-fi
-
-make install
-
-if [ $? -ne 0 ]; then
-  echo "LIBPNG compile failed"
-  exit 1
-fi
-
-sleep 1
 
 #
 # SDL
 #
+
+echo "####################"
+echo '♻️ ' Start compiling SDL
+echo "####################"
 
 cd ${COMPILED}
 wget https://libsdl.org/release/SDL2-${SDL_VERSION}.tar.gz
@@ -858,9 +865,42 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+
+#
+# WEBP
+#
+
+echo "####################"
+echo '♻️ ' Start compiling WEBP
+echo "####################"
+
+cd ${COMPILED}
+wget https://github.com/webmproject/libwebp/archive/refs/tags/v${LIBWEBP_VERSION}.tar.gz
+tar xf v${LIBWEBP_VERSION}.tar.gz
+cd libwebp-${LIBWEBP_VERSION}
+
+cmake -DCMAKE_INSTALL_PREFIX:PATH=${SOURCE} -DWEBP_LINK_STATIC=ON -DBUILD_SHARED_LIBS=OFF .
+
+make -j
+
+if [ $? -ne 0 ]; then
+  echo "LIBWEBP compile failed"
+  exit 1
+fi
+
+make install
+
+if [ $? -ne 0 ]; then
+  echo "LIBWEBP compile failed"
+  exit 1
+fi
+
 #
 # SVT-AV1
 #
+echo "####################"
+echo '♻️ ' Start compiling SVT-AV1
+echo "####################"
 
 cd ${COMPILED}
 git clone --depth=1 https://gitlab.com/AOMediaCodec/SVT-AV1.git
@@ -874,8 +914,9 @@ make install
 #
 # ffmpeg
 #
-
+echo "####################"
 echo '♻️ ' Start compiling FFMPEG
+echo "####################"
 
 cd ${COMPILED}
 wget https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2
@@ -938,4 +979,7 @@ fi
 cd ${SOURCE}/bin
 zip ffmpeg_bin.zip ffmpeg ffprobe
 cp ffmpeg_bin.zip "${HOME}/"
+
+cd "${HOME}"
+hdiutil detach ${RAMDISK}
 
